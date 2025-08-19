@@ -1,110 +1,103 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import images from "../../images/images";
 import Button from "../Button/Button";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 
 const Navbar = () => {
-  const [menu, setMenu] = React.useState("home");
-  const menuRef = useRef("0px");
+  const [menu, setMenu] = useState("home");
+  const menuRef = useRef(null);
 
   const openMenu = () => {
-    menuRef.current.style.right = "0";
-  }
+    if (menuRef.current) {
+      menuRef.current.style.right = "0";
+    }
+  };
 
   const closeMenu = () => {
-    menuRef.current.style.right = "-350px";
-  }
-  const menu_hovering =
-    "transition-all hover:scale-115 hover:duration-1000 hover:translate-y-[15px] ease-in-out cursor-pointer pl-5 flex lg:block";
-
-  const changeMenu = (menu) => {
-    setMenu(menu);
+    if (menuRef.current) {
+      menuRef.current.style.right = "-350px";
+    }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024 && menuRef.current) {
+        menuRef.current.style.right = "0";
+      } else if (window.innerWidth < 1024 && menuRef.current) {
+        menuRef.current.style.right = "-350px";
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const navItem = (id, label) => (
+    <li
+      className={`relative pl-5 transition-all duration-300 ease-in-out cursor-pointer 
+        hover:scale-110 hover:translate-y-1 after:content-[''] after:absolute after:w-0 after:h-[2px] 
+        after:bg-[#B923E1] after:left-0 after:bottom-[-6px] hover:after:w-full after:transition-all 
+        after:duration-500 ${menu === id ? "text-[#B923E1] after:w-full" : ""}`}
+    >
+      <AnchorLink href={`#${id}`} offset="30" onClick={() => setMenu(id)}>
+        {label}
+      </AnchorLink>
+    </li>
+  );
+
   return (
-    <div className="navbar md:fixed top-0 left-0 right-0 z-50 bg-[#161513] flex justify-between items-center text-md lg:text-xl mb-5 mx-12 lg:mx-20">
-      <div>
+    <div className=" navbar fixed top-0 left-0 right-0 z-50 bg-[#161513] px-4 sm:px-8 lg:px-20 py-4 flex justify-between items-center text-white shadow-md">
+      {/* Logo & Mobile Menu Button */}
+      <div className="flex items-center gap-4  w-full lg:w-auto justify-between">
         <img
-          className="w-50 rounded-2xl hover:scale-150 hover:translate-y-[50px] hover:duration-1000"
           src={images.logo}
-          alt="ảnh logo"
+          alt="logo"
+          className="w-24 sm:w-32 md:w-36 rounded-2xl transition-transform duration-500 hover:scale-110"
         />
-        {/* <h1 className='font-bold my-2'>Văn Thảo</h1> */}
+
+        {/* Mobile Menu Open Button */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="nav-mob-open w-10 h-10 block fixed right-10 top-11 cursor-pointer lg:hidden"
+          className="w-8 h-8 block lg:hidden cursor-pointer"
           onClick={openMenu}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
       </div>
-      <ul ref={menuRef} className="nav-menu fixed top-0 -right-[350px] w-[22rem] h-screen z-20 transition-[right] duration-500
-      bg-[rgba(31,0,22,0.9)] bg-opacity-80 lg:bg-[#161513] flex flex-col items-start gap-7 text-2xl 
-        lg:static lg:w-auto md:h-auto lg:flex-row lg:items-center sm:justify-between rounded-2xl">
+
+      {/* Navigation Menu */}
+      <ul
+        ref={menuRef}
+        className="fixed top-0 -right-[350px] w-[22rem] h-screen z-20 transition-[right] duration-500
+          bg-[rgba(31,0,22,0.95)] backdrop-blur-sm lg:static lg:w-auto lg:h-auto lg:bg-transparent
+          flex flex-col lg:flex-row items-start lg:items-center gap-8 text-xl p-8 lg:p-0 rounded-2xl"
+      >
+        {/* Mobile Close Button */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="nav-mob-close block lg:hidden w-10 h-10 relative top-7 left-72 md:left-72 cursor-pointer"
+          className="w-8 h-8 block lg:hidden absolute top-6 right-6 cursor-pointer"
           onClick={closeMenu}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M6 18 18 6M6 6l12 12"
-          />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
-        <li className={menu_hovering}>
-          <AnchorLink className="" href="#home">
-            <p onClick={() => changeMenu("home")}>Home</p>
-          </AnchorLink>
-          {menu === "home" && (
-            <img className="w-20 h-10 " src={images.underline} alt="underline" />
-          )}
-        </li>
-        <li className={menu_hovering}>
-          <AnchorLink className="" offset="30" href="#about">
-            <p onClick={() => changeMenu("about")}>About me</p>
-          </AnchorLink>
-          {menu === "about" && (
-            <img className="w-20 h-10" src={images.underline} alt="underline" />
-          )}
-        </li>
-        <li className={menu_hovering}>
-          <AnchorLink className="" offset="30" href="#services">
-            <p onClick={() => changeMenu("service")}>Service</p>
-          </AnchorLink>
-          {menu === "service" && (
-            <img className="w-20 h-10" src={images.underline} alt="underline" />
-          )}
-        </li>
-        <li className={menu_hovering}>
-          <AnchorLink className="" offset="30" href="#portfolio">
-            <p onClick={() => changeMenu("portfolio")}>Portfolio</p>
-          </AnchorLink>
-          {menu === "portfolio" && (
-            <img className="w-20 h-10" src={images.underline} alt="underline" />
-          )}
-        </li>
-        <li className={menu_hovering + " pb-10 lg:pb-0"}>
-          <AnchorLink className="" offset="30" href="#contact">
-            <p onClick={() => changeMenu("contact")}>Contact</p>
-          </AnchorLink>
-          {menu === "contact" && (
-            <img className="w-20 h-10" src={images.underline} alt="underline" />
-          )}
-        </li>
+
+        {navItem("home", "Home")}
+        {navItem("about", "About me")}
+        {navItem("services", "Service")}
+        {navItem("portfolio", "Portfolio")}
+        {navItem("contact", "Contact")}
       </ul>
-      <AnchorLink className="hidden xl:block" offset={30} href="#contact">
+
+      {/* Connect Button for Desktop */}
+      <AnchorLink href="#contact" offset="30" className="hidden xl:block">
         <Button btn_name="Connect with me" />
       </AnchorLink>
     </div>
