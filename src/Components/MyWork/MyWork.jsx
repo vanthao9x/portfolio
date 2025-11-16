@@ -5,7 +5,7 @@ const MyWork = () => {
   return (
     <div
       id="portfolio"
-      className="mywork container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16"
+      className="mywork container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16 lg:pt-20"
     >
       {/* Title */}
       <div className="mywork-title relative text-center">

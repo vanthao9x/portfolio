@@ -5,12 +5,12 @@ const Services = () => {
   return (
     <div
       id="services"
-      className="services container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16"
+      className="services container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16 lg:pt-20"
     >
       {/* Title */}
       <div className="relative text-center">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold px-4">Services</h1>
-        <img className="absolute bottom-0 right-0 -z-10 hidden sm:block" src="aa" alt="aa" />
+        {/* <img className="absolute bottom-0 right-0 -z-10 hidden sm:block" src="aa" alt="aa" /> */}
       </div>
 
       {/* Services Grid */}

@@ -8,7 +8,7 @@ const About = () => {
   const about_achievement = "flex flex-col justify-center items-center gap-2 transition duration-300 hover:scale-105 ease-in-out";
 
   return (
-    <div id="about" className="aboutMe container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16">
+    <div id="about" className="aboutMe container max-w-screen-xl mx-auto px-4 py-16 flex flex-col items-center gap-16 lg:pt-20">
       
       {/* Title */}
       <div className="relative text-center">

@@ -32,7 +32,7 @@ const Contact = () => {
   return (
     <div
       id="contact"
-      className="contact flex flex-col items-center justify-center gap-12 pt-20 px-4 lg:px-20 max-w-screen-xl mx-auto"
+      className="contact flex flex-col items-center justify-center gap-12 lg:pt-20 px-4 lg:px-20 max-w-screen-xl mx-auto"
     >
       <div className="contact-title flex justify-center relative w-full">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold px-4">
