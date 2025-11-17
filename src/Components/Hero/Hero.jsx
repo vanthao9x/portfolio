@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Hero.css";
 import images from "../../images/images";
 import Button from "../Button/Button";
 import AnchorLink from "react-anchor-link-smooth-scroll";
-
+import ResumeModel from "./ResumeModel";
 const Hero = () => {
+  const [ResumeOpen, setResumeOpen] = useState(false);
   return (
     <div
       id="home"
@@ -40,9 +41,12 @@ const Hero = () => {
         <AnchorLink offset={30} href="#contact">
           <Button btn_name="Connect with me" />
         </AnchorLink>
-        <div className="hero-resume px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full border-2 border-white cursor-pointer hover:border-[#B415FF] transition-all duration-300 ease-in-out">
+        <button
+          onClick={()=> setResumeOpen(true)}
+          className="hero-resume px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full border-2 border-white cursor-pointer hover:border-[#B415FF] transition-all duration-300 ease-in-out">
           My Resume
-        </div>
+        </button>
+        <ResumeModel isOpen={ResumeOpen} onClose={() => setResumeOpen(false)} />
       </div>
     </div>
   );
